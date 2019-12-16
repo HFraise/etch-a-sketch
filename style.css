@@ -1,0 +1,10 @@
+#container {
+    display: grid;
+    width: 960px;
+}
+.square {
+    border: black solid 1px;  
+}
+.moused {
+    background-color: black;
+}

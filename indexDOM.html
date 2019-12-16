@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Rock Paper Scissor</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissor">Scissor</button>
+        <div id="results">
+            <div id="contentResults"></div>
+            <div id="scores">
+                <div id="scoreP">You : 0</div>
+                <div id="scoreC">Computer : 0</div>
+            </div>
+        </div>
+
+        <script>
+            let randomNum;
+            function computerPlay() {
+                let element = ['Rock', 'Paper', 'Scissor'];
+                randomNum = Math.floor(Math.random()*element.length);
+                return element[randomNum];
+            };
+            let computerSelection;
+            let playerSelection;
+            
+            function playRound(playerSelection, computerSelection) {
+                computerSelection = computerPlay();
+                let a;
+                let b;
+                a = playerSelection;
+                b = computerSelection;
+                a = a.toLowerCase();
+                a = a.charAt(0).toUpperCase() + a.slice(1);
+
+                let result;
+                if (a == 'Rock' && b =='Rock') {result = "Draw !"};
+                if (a == 'Rock' && b =='Paper') {computerScore++; result = "You Lose ! "+b+" beats "+a};
+                if (a == 'Rock' && b =='Scissor') {playerScore++; result = "You Win ! "+a+" beats "+b};
+                if (a == 'Paper' && b =='Rock') {playerScore++; result = "You Win ! "+a+" beats "+b};
+                if (a == 'Paper' && b =='Paper') {result = "Draw !"};
+                if (a == 'Paper' && b =='Scissor') {computerScore++; result = "You Lose ! "+b+" beats "+a};
+                if (a == 'Scissor' && b =='Rock') {computerScore++; result = "You Lose ! "+b+" beats "+a};
+                if (a == 'Scissor' && b =='Paper') {playerScore++; result = "You Win ! "+a+" beats "+b};
+                if (a == 'Scissor' && b =='Scissor') {result = "Draw !"};
+                
+                const container = document.querySelector("#results");
+                const content = document.querySelector('#contentResults');
+                content.classList.add('content');
+                content.textContent = result;
+                return container.appendChild(content);
+
+            };
+
+            //DOM
+            function start() {
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach((button) => {
+                button.addEventListener('click', (e) => {
+                    if(round<5){
+                    playRound(button.id);
+                    round = playerScore + computerScore;
+                    const scoreP = document.querySelector("#scoreP");
+                    const scoreC = document.querySelector("#scoreC");
+                    scoreP.textContent = "You : " + playerScore;
+                    scoreC.textContent = "Computer : " + computerScore;
+                    
+                    } else {
+                        if (playerScore>computerScore) {
+                            const container = document.querySelector("#results");
+                            const content = document.querySelector('#contentResults');
+                            content.classList.add('content');
+                            content.textContent = "You Win!";
+                            return container.appendChild(content);
+                        } else {
+                            const container = document.querySelector("#results");
+                            const content = document.querySelector('#contentResults');
+                            content.classList.add('content');
+                            content.textContent = "You Loose!";
+                            return container.appendChild(content);
+                        };
+                    };
+                });
+            });
+            };
+            let playerScore = 0;
+            let computerScore = 0;
+            let round = 0;
+            start();
+
+        </script>
+    </body>
+</html>
